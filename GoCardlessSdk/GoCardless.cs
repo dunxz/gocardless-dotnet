@@ -37,7 +37,6 @@ namespace GoCardlessSdk
             get { return _baseUrl ?? BaseUrls[Environment ?? Environments.Production]; }
             set { _baseUrl = value.Trim(); }
         }
-
         public static Environments? Environment { get; set; }
 
         public static AccountDetails AccountDetails { get; set; }
@@ -72,7 +71,7 @@ namespace GoCardlessSdk
         }
         private static string GetAssemblyFileVersion()
         {
-            Assembly assembly = Assembly.GetAssembly(typeof (GoCardless));
+            Assembly assembly = Assembly.GetAssembly(typeof(GoCardless));
             var attributes = assembly.GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)
                     as AssemblyFileVersionAttribute[];
 
@@ -90,11 +89,11 @@ namespace GoCardlessSdk
             set { _generateNonce = value; }
         }
 
-        private static Func<DateTimeOffset> _getUtcNow; 
+        private static Func<DateTimeOffset> _getUtcNow;
         internal static Func<DateTimeOffset> GetUtcNow
         {
             get { return _getUtcNow ?? (_getUtcNow = () => DateTimeOffset.UtcNow); }
             set { _getUtcNow = value; }
-        } 
+        }
     }
 }

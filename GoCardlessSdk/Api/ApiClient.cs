@@ -52,10 +52,10 @@ namespace GoCardlessSdk.Api
             var restRequest = GetRestRequest("merchants/" + merchantId + "/bills", Method.GET, options);
             return Execute<List<BillResponse>>(restRequest).AsReadOnly();
         }
-        
+
         public IEnumerable<PreAuthorizationResponse> GetMerchantPreAuthorizations(string merchantId, string userId = null, DateTimeOffset? before = null, DateTimeOffset? after = null)
         {
-            var options = new {user_id = userId, before, after};
+            var options = new { user_id = userId, before, after };
             var restRequest = GetRestRequest("merchants/" + merchantId + "/pre_authorizations", Method.GET, options);
             return Execute<List<PreAuthorizationResponse>>(restRequest).AsReadOnly();
         }
@@ -131,7 +131,7 @@ namespace GoCardlessSdk.Api
         {
             var client = new RestClient
                              {
-                                 BaseUrl = ApiUrl,
+                                 BaseUrl = new System.Uri(ApiUrl),
                                  UserAgent = GoCardless.UserAgent
                              };
             var serializer = new Newtonsoft.Json.JsonSerializer
@@ -143,8 +143,8 @@ namespace GoCardlessSdk.Api
             var response = client.Execute<T>(request);
             if (response.StatusCode != expected)
             {
-                var ex = new ApiException("Expected response " + (int) expected + " " + expected + " but received " +
-                                 (int) response.StatusCode + " " + response.StatusCode +
+                var ex = new ApiException("Expected response " + (int)expected + " " + expected + " but received " +
+                                 (int)response.StatusCode + " " + response.StatusCode +
                                  ". See Content for more details");
                 try
                 {
@@ -159,9 +159,9 @@ namespace GoCardlessSdk.Api
             return response.Data;
         }
 
-        public BillResponse PostBill(decimal amount, string preAuthorizationId, string name = null, string description = null, DateTime? chargeCustomerAt=null)
+        public BillResponse PostBill(decimal amount, string preAuthorizationId, string name = null, string description = null, DateTime? chargeCustomerAt = null)
         {
-          
+
             var restRequest = GetRestRequest("bills", Method.POST);
             restRequest.AddBody(new
             {
